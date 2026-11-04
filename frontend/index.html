@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechPro | الحلول التقنية والرقمية للطلبة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-primary: #090D16;
+            --bg-surface: #111827;
+            --bg-surface-hover: #1E293B;
+            --accent-blue: #2563EB;
+            --accent-glow: #3B82F6;
+            --status-success: #10B981;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background-color: var(--bg-primary); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+
+        /* 1. Sticky Navbar */
+        .navbar {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(9, 13, 22, 0.85); backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 0.9rem 1.5rem; display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-size: 1.3rem; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
+        .logo span { color: var(--accent-glow); font-family: 'Inter', sans-serif; }
+        .status-pill {
+            background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35);
+            color: var(--status-success); padding: 0.25rem 0.85rem; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 6px;
+        }
+        .pulse-dot {
+            width: 8px; height: 8px; background: var(--status-success); border-radius: 50%;
+            box-shadow: 0 0 8px var(--status-success); animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.5; } }
+
+        /* 2. Hero Section */
+        header {
+            text-align: center; padding: 3rem 1.2rem 2rem;
+            background: radial-gradient(circle at top, rgba(37, 99, 235, 0.22) 0%, var(--bg-primary) 70%);
+        }
+        header h1 {
+            font-size: 2.1rem; font-weight: 800; margin-bottom: 0.7rem;
+            background: linear-gradient(90deg, #FFFFFF, #60A5FA);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        header p { color: var(--text-muted); max-width: 580px; margin: 0 auto 1.5rem; font-size: 0.98rem; }
+
+        /* 3. Filter Tabs */
+        .container { max-width: 1120px; margin: 0 auto; padding: 0 1.2rem; }
+        .filter-tabs {
+            display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2rem;
+        }
+        .tab-btn {
+            background: var(--bg-surface); color: var(--text-muted);
+            border: 1px solid rgba(255,255,255,0.08); padding: 0.55rem 1.2rem;
+            border-radius: 50px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: 0.25s;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--accent-blue); color: #fff; border-color: var(--accent-glow);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35);
+        }
+
+        /* 4. Services Grid */
+        .services-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.3rem;
+        }
+        .card {
+            background: var(--bg-surface); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px; padding: 1.5rem; transition: 0.25s; cursor: pointer;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .card:hover {
+            transform: translateY(-5px); background: var(--bg-surface-hover);
+            border-color: var(--accent-glow); box-shadow: 0 10px 25px -10px rgba(37, 99, 235, 0.4);
+        }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .card-icon {
+            width: 48px; height: 48px; background: rgba(37, 99, 235, 0.15);
+            color: var(--accent-glow); border-radius: 12px; display: flex;
+            align-items: center; justify-content: center; font-size: 1.4rem;
+        }
+        .price-badge {
+            background: rgba(16, 185, 129, 0.12); color: var(--status-success);
+            padding: 0.2rem 0.7rem; border-radius: 8px; font-weight: 800; font-size: 0.85rem;
+        }
+        .card h3 { font-size: 1.18rem; margin-bottom: 0.5rem; color: #fff; }
+        .card p { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.3rem; }
+        .card-footer {
+            display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.9rem; font-size: 0.82rem; color: var(--text-muted);
+        }
+        .config-btn {
+            background: var(--accent-blue); color: #fff; border: none;
+            padding: 0.45rem 1rem; border-radius: 8px; font-weight: 700; cursor: pointer;
+        }
+
+        /* 5. Before / After Proof Section */
+        .proof-section {
+            margin: 3.5rem 0; background: var(--bg-surface); border-radius: 18px;
+            padding: 2rem 1.5rem; border: 1px solid rgba(59, 130, 246, 0.2); text-align: center;
+        }
+        .proof-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; margin-top: 1.5rem;
+        }
+        .proof-box {
+            padding: 1.2rem; border-radius: 12px; background: rgba(9, 13, 22, 0.6);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .proof-box.after { border-color: var(--status-success); }
+        .metric { font-family: 'Inter', sans-serif; font-size: 1.6rem; font-weight: 800; margin: 0.4rem 0; }
+
+        /* 6. Dynamic Configurator Modal (Bottom Sheet on Mobile) */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.78); backdrop-filter: blur(5px);
+            display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem;
+        }
+        .modal {
+            background: var(--bg-surface); border: 1px solid var(--accent-glow);
+            border-radius: 20px; max-width: 480px; width: 100%; padding: 1.6rem;
+            position: relative; max-height: 92vh; overflow-y: auto;
+        }
+        .close-btn {
+            position: absolute; top: 14px; left: 16px; background: none; border: none;
+            color: var(--text-muted); font-size: 1.5rem; cursor: pointer;
+        }
+        .option-group { margin: 1rem 0; text-align: right; }
+        .option-group label { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; color: #cbd5e1; }
+        .pills-container { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+        .option-pill {
+            background: var(--bg-primary); border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted); padding: 0.6rem; border-radius: 10px;
+            font-size: 0.85rem; font-weight: 600; cursor: pointer; text-align: center; transition: 0.2s;
+        }
+        .option-pill.selected {
+            background: rgba(37, 99, 235, 0.2); border-color: var(--accent-glow); color: #fff;
+        }
+        .note-input {
+            width: 100%; background: var(--bg-primary); border: 1px solid rgba(255,255,255,0.1);
+            color: #fff; padding: 0.65rem; border-radius: 10px; font-size: 0.85rem; margin-top: 0.4rem;
+        }
+
+        /* Live Price Bar */
+        .live-price-bar {
+            background: rgba(16, 185, 129, 0.1); border: 1px solid var(--status-success);
+            border-radius: 12px; padding: 0.85rem; margin: 1.2rem 0; text-align: center;
+        }
+        .live-price-bar .price-value {
+            font-size: 1.45rem; font-weight: 800; color: var(--status-success); display: block;
+        }
+
+        /* Contact Channels */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+        .contact-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 0.75rem; border-radius: 10px; color: #fff; font-weight: 700;
+            text-decoration: none; font-size: 0.88rem; border: none; cursor: pointer;
+        }
+        .btn-wa { background: #16a34a; grid-column: span 2; font-size: 0.95rem; }
+        .btn-tg { background: #0284c7; }
+        .btn-fb { background: #1d4ed8; }
+        .btn-ig { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
+        .btn-em { background: #475569; }
+    </style>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="خدمات تقنية ورقمية للطلبة في الإقامة والجامعة: تثبيت الأنظمة، تسريع الحواسيب، بطاقات Visa واشتراكات الذكاء الاصطناعي." />
+    <meta name="keywords" content="صيانة حواسيب باب الزوار, فورمات لابتوب, بطاقات فيزا, اشتراكات ChatGPT, طلبة USTHB" />
+    <meta name="author" content="TechPro Services" />
+
+    <!-- Open Graph / Social Media Preview Cards -->
+    <meta property="og:title" content="TechPro | الحلول التقنية والرقمية للطلبة" />
+    <meta property="og:description" content="خدمات سريعة ومضمونة بأسعار طلابية: صيانة، تسريع الألعاب، وخدمات رقمية فورية." />
+    <meta property="og:type" content="website" />
+    <!-- التهيئة المتقدمة لمحركات البحث والمعاينة (Technical SEO & Schema Markup) -->
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#090D16">
+
+    <!-- Schema.org JSON-LD للخدمات التقنية -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ComputerRepair",
+      "name": "TechPro Services",
+      "description": "خدمات تقنية ورقمية للطلبة: تثبيت وتفعيل الأنظمة، تسريع الحواسيب والألعاب، فتح بطاقات Visa واشتراكات الذكاء الاصطناعي.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Bab Ezzouar, Algiers",
+        "addressCountry": "DZ"
+      },
+      "priceRange": "300 DZD - 1500 DZD"
+    }
+    </script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">Tech<span>Pro</span></div>
+        <div class="status-pill">
+            <span class="pulse-dot"></span> متاح الآن في الإقامة / أونلاين
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header>
+        <h1>خدمات تقنية ورقمية بمعايير احترافية</h1>
+        <p>تثبيت وتفعيل الأنظمة، تسريع الحواسيب للألعاب والدراسة، توفير بطاقات Visa واشتراكات الذكاء الاصطناعي بضمان كامل وأسعار طلابية.</p>
+    </header>
+
+    <div class="container">
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <button class="tab-btn active" onclick="filterServices('all', this)">الكل</button>
+            <button class="tab-btn" onclick="filterServices('sys', this)">أنظمة وصيانة</button>
+            <button class="tab-btn" onclick="filterServices('game', this)">برامج وألعاب</button>
+            <button class="tab-btn" onclick="filterServices('dig', this)">خدمات رقمية و AI</button>
+        </div>
+
+        <!-- Dynamic Services Grid -->
+        <div class="services-grid" id="servicesGrid"></div>
+
+        <!-- Visual Proof Section -->
+        <section class="proof-section">
+            <h2>⚡ نتائج حقيقية (قبل وبعد ضبط النظام)</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">مقارنة فعلية على حاسوب طالب بعد تطبيق حزمة إزالة اللاغ وضبط الإعدادات</p>
+            <div class="proof-grid">
+                <div class="proof-box">
+                    <span style="color: #ef4444; font-weight: 700;">❌ قبل الضبط</span>
+                    <div class="metric" style="color: #ef4444;">84% RAM</div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">إقلاع بطيء (55 ثانية) + تشنج في الألعاب</p>
+                </div>
+                <div class="proof-box after">
+                    <span style="color: var(--status-success); font-weight: 700;">✅ بعد الضبط</span>
+                    <div class="metric" style="color: var(--status-success);">31% RAM</div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">إقلاع صاروخي (12 ثانية) + ثبات تام للـ FPS</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Interactive Order Configurator Modal -->
+    <div class="modal-overlay" id="orderModal" onclick="if(event.target.id==='orderModal') closeModal()">
+        <div class="modal">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <h3 id="modalTitle" style="color: var(--accent-glow); margin-bottom: 0.3rem;"></h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1rem;">حدد خياراتك ليتم حساب التكلفة وتجهيز طلبك تلقائياً:</p>
+
+            <div class="option-group">
+                <label id="q1Label"></label>
+                <div class="pills-container" id="q1Options"></div>
+            </div>
+
+            <div class="option-group">
+                <label id="q2Label"></label>
+                <div class="pills-container" id="q2Options"></div>
+            </div>
+
+            <div class="option-group">
+                <label>ملاحظة إضافية أو اسم اللعبة/البرنامج (اختياري):</label>
+                <input type="text" id="userNote" class="note-input" placeholder="مثال: حاسوبي Dell / أريد لعبة...">
+            </div>
+
+            <!-- Live Price Calculator Display -->
+            <div class="live-price-bar">
+                <span style="font-size: 0.82rem; color: #cbd5e1;">💰 التكلفة التقديرية للخدمة المختارة:</span>
+                <span class="price-value" id="calculatedPrice">0 د.ج</span>
+            </div>
+
+            <!-- Multi-channel Dispatch -->
+            <div class="contact-grid">
+                <button class="contact-btn btn-wa" onclick="dispatchOrder('whatsapp')">
+                    <i class="fa-brands fa-whatsapp fa-lg"></i> إرسال الطلب عبر واتساب
+                </button>
+                <button class="contact-btn btn-tg" onclick="dispatchOrder('telegram')">
+                    <i class="fa-brands fa-telegram"></i> تيليجرام
+                </button>
+                <button class="contact-btn btn-fb" onclick="dispatchOrder('facebook')">
+                    <i class="fa-brands fa-facebook"></i> فيسبوك
+                </button>
+                <button class="contact-btn btn-ig" onclick="dispatchOrder('instagram')">
+                    <i class="fa-brands fa-instagram"></i> إنستغرام
+                </button>
+                <button class="contact-btn btn-em" onclick="dispatchOrder('email')">
+                    <i class="fa-solid fa-envelope"></i> إيميل
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ====== 1. إعدادات التواصل والـ API الخاصة بك ======
+        const CONFIG = {
+            whatsapp: "213XXXXXXXXX", // ضع رقمك هنا
+            telegram: "YourTelegramUsername",
+            facebook: "https://facebook.com/YourProfile",
+            instagram: "https://instagram.com/YourProfile",
+            email: "your.email@gmail.com",
+            backendApiUrl: "http://localhost:8000/api/orders" // رابط خادم Python FastAPI
+        };
+
+        // ====== 2. قاعدة بيانات الخدمات والأسعار المعدلة ======
+        const SERVICES_DATA = [
+            {
+                id: "os_install", category: "sys", icon: "fa-brands fa-windows",
+                title: "تثبيت وتفعيل الأنظمة", startPrice: "من 400 د.ج", duration: "45 دقيقة",
+                desc: "تثبيت نسخ Windows (10/11) أو Linux المستقرة مع التفعيل الرسمي الدائم بالمفتاح.",
+                q1: { label: "1. اختر النظام المطلوب:", options: [
+                    { text: "Windows 11 Pro", price: 700 },
+                    { text: "Windows 10 Pro", price: 700 },
+                    { text: "توزيعة Linux", price: 700 },
+                    { text: "تفعيل رسمي فقط", price: 400 }
+                ]},
+                q2: { label: "2. حالة الملفات والبيانات:", options: [
+                    { text: "فورمات نظيف كامل", addPrice: 0 },
+                    { text: "حفظ ملفاتي السابقة", addPrice: 200 }
+                ]}
+            },
+            {
+                id: "lag_fix", category: "sys", icon: "fa-solid fa-gauge-high",
+                title: "إزالة اللاغ وتسريع الأداء", startPrice: "400 د.ج", duration: "30 دقيقة",
+                desc: "تنظيف عميق للنظام، ضبط إعدادات الـ BIOS والـ Windows، ورفع الـ FPS للألعاب.",
+                q1: { label: "1. ما هو هدفك الأساسي؟", options: [
+                    { text: "تنظيف وتسريع للدراسة", price: 400 },
+                    { text: "ضبط شامل للألعاب (رفع FPS)", price: 600 }
+                ]},
+                q2: { label: "2. حالة الجهاز حالياً:", options: [
+                    { text: "يحتاج ضبطاً وتنظيفاً", addPrice: 0 },
+                    { text: "ثقيل جداً ويتشنج باستمرار", addPrice: 0 }
+                ]}
+            },
+            {
+                id: "office_pack", category: "game", icon: "fa-solid fa-file-word",
+                title: "تثبيت وتفعيل نسخ Office", startPrice: "400 د.ج", duration: "20 دقيقة",
+                desc: "تثبيت حزمة أوفيس الكاملة (Word, Excel, PowerPoint) وتفعيلها مدى الحياة.",
+                q1: { label: "1. اختر نوع الخدمة:", options: [
+                    { text: "تفعيل نسخة مثبتة عندي", price: 400 },
+                    { text: "تثبيت كامل جديد + تفعيل", price: 600 }
+                ]},
+                q2: { label: "2. الإصدار المفضل:", options: [
+                    { text: "Office 2021 / 2024", addPrice: 0 },
+                    { text: "النسخة الأخف لجهازي", addPrice: 0 }
+                ]}
+            },
+            {
+                id: "drivers_fix", category: "sys", icon: "fa-solid fa-microchip",
+                title: "حل مشاكل التعريفات (Drivers)", startPrice: "400 د.ج", duration: "25 دقيقة",
+                desc: "تحديث وإصلاح تعريفات كرت الشاشة، الصوت، الـ Wi-Fi، وحل مشاكل الشاشة الزرقاء.",
+                q1: { label: "1. نوع العطل أو التعريف:", options: [
+                    { text: "تعريف محدد (صوت/واي فاي)", price: 400 },
+                    { text: "كرت الشاشة + فحص شامل", price: 600 }
+                ]},
+                q2: { label: "2. طريقة التدخل المفضلة:", options: [
+                    { text: "حضوري (في الإقامة/الجامعة)", addPrice: 0 },
+                    { text: "عن بُعد (AnyDesk)", addPrice: 0 }
+                ]}
+            },
+            {
+                id: "games_install", category: "game", icon: "fa-solid fa-gamepad",
+                title: "تثبيت الألعاب والمحاكيات", startPrice: "من 300 د.ج", duration: "حسب اللعبة",
+                desc: "تثبيت ألعاب الـ PC ومحاكي PPSSPP وألعابه مع ضبط الجرافيك وحل مشاكل ملفات DLL.",
+                q1: { label: "1. ماذا تريد أن تثبت؟", options: [
+                    { text: "محاكي PPSSPP مع ضبطه", price: 300 },
+                    { text: "لعبة PC + ضبط الإعدادات", price: 400 }
+                ]},
+                q2: { label: "2. هل تحتاج حل مشاكل تشغيل؟", options: [
+                    { text: "تثبيت اللعبة فقط", addPrice: 0 },
+                    { text: "تثبيت + إصلاح ملفات DLL", addPrice: 100 }
+                ]}
+            },
+            {
+                id: "visa_cards", category: "dig", icon: "fa-regular fa-credit-card",
+                title: "فتح وشحن بطاقات Visa", startPrice: "حسب الطلب", duration: "فوري",
+                desc: "فتح وتفعيل البطاقات البنكية الافتراضية والبلاستيكية للدفع الإلكتروني والشراء بأمان.",
+                q1: { label: "1. نوع الخدمة المالية:", options: [
+                    { text: "فتح وتفعيل بطاقة جديدة", price: "يُحدد حسب نوع البطاقة" },
+                    { text: "شحن رصيد بطاقة (Euro/$)", price: "حسب المبلغ المطلوب" }
+                ]},
+                q2: { label: "2. طريقة الدفع المتوفرة لديك:", options: [
+                    { text: "نقداً (يداً بيد)", addPrice: 0 },
+                    { text: "BaridiMob / CCP", addPrice: 0 }
+                ]}
+            },
+            {
+                id: "ai_subs", category: "dig", icon: "fa-solid fa-robot",
+                title: "اشتراكات الذكاء الاصطناعي", startPrice: "سعر تنافسي", duration: "فوري",
+                desc: "تفعيل اشتراكات ChatGPT Plus, Claude, GitHub Copilot وغيرها للدراسة والبرمجة.",
+                q1: { label: "1. اختر المنصة المطلوبة:", options: [
+                    { text: "ChatGPT Plus / Claude", price: "حسب سعر الصرف الشهري" },
+                    { text: "GitHub Copilot / أداة أخرى", price: "سعر طلابي خاص" }
+                ]},
+                q2: { label: "2. نوع التفعيل:", options: [
+                    { text: "تفعيل في حسابي الشخصي", addPrice: 0 },
+                    { text: "حساب جديد جاهز", addPrice: 0 }
+                ]}
+            }
+        ];
+
+        let currentService = null;
+        let selectedQ1 = 0;
+        let selectedQ2 = 0;
+
+        function renderServices(filter = 'all') {
+            const grid = document.getElementById('servicesGrid');
+            grid.innerHTML = '';
+            SERVICES_DATA.filter(s => filter === 'all' || s.category === filter).forEach(service => {
+                grid.innerHTML += `
+                    <div class="card" onclick="openConfigurator('${service.id}')">
+                        <div>
+                            <div class="card-header">
+                                <div class="card-icon"><i class="${service.icon}"></i></div>
+                                <span class="price-badge">${service.startPrice}</span>
+                            </div>
+                            <h3>${service.title}</h3>
+                            <p>${service.desc}</p>
+                        </div>
+                        <div class="card-footer">
+                            <span><i class="fa-regular fa-clock"></i> ${service.duration}</span>
+                            <button class="config-btn">خصص طلبك ←</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function filterServices(cat, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderServices(cat);
+        }
+
+        function openConfigurator(serviceId) {
+            currentService = SERVICES_DATA.find(s => s.id === serviceId);
+            selectedQ1 = 0; selectedQ2 = 0;
+            document.getElementById('userNote').value = '';
+            document.getElementById('modalTitle').innerText = currentService.title;
+            document.getElementById('q1Label').innerText = currentService.q1.label;
+            document.getElementById('q2Label').innerText = currentService.q2.label;
+            renderPills();
+            updateLivePrice();
+            document.getElementById('orderModal').style.display = 'flex';
+        }
+
+        function renderPills() {
+            const q1Box = document.getElementById('q1Options');
+            const q2Box = document.getElementById('q2Options');
+            q1Box.innerHTML = currentService.q1.options.map((opt, idx) => `
+                <div class="option-pill ${idx === selectedQ1 ? 'selected' : ''}" onclick="selectOption(1, ${idx})">${opt.text}</div>
+            `).join('');
+            q2Box.innerHTML = currentService.q2.options.map((opt, idx) => `
+                <div class="option-pill ${idx === selectedQ2 ? 'selected' : ''}" onclick="selectOption(2, ${idx})">${opt.text}</div>
+            `).join('');
+        }
+
+        function selectOption(qNum, idx) {
+            if (qNum === 1) selectedQ1 = idx; else selectedQ2 = idx;
+            renderPills();
+            updateLivePrice();
+        }
+
+        function updateLivePrice() {
+            const base = currentService.q1.options[selectedQ1].price;
+            const extra = currentService.q2.options[selectedQ2].addPrice;
+            const priceEl = document.getElementById('calculatedPrice');
+
+            if (typeof base === 'number') {
+                // إذا اختار "تفعيل رسمي فقط" لا نضيف سعر حفظ الملفات
+                const finalPrice = (base === 400 && currentService.id === 'os_install') ? base : (base + extra);
+                priceEl.innerText = `${finalPrice} د.ج`;
+            } else {
+                priceEl.innerText = base;
+            }
+        }
+
+        async function dispatchOrder(channel) {
+            const opt1 = currentService.q1.options[selectedQ1].text;
+            const opt2 = currentService.q2.options[selectedQ2].text;
+            const price = document.getElementById('calculatedPrice').innerText;
+            const note = document.getElementById('userNote').value.trim() || "لا توجد";
+
+            const orderSummary = `السلام عليكم، أريد طلب خدمة من موقعكم:\n` +
+                `🔹 الخدمة: ${currentService.title}\n` +
+                `🔸 الخيار 1: ${opt1}\n` +
+                `🔸 الخيار 2: ${opt2}\n` +
+                `💰 السعر المقدر: ${price}\n` +
+                `📝 ملاحظة: ${note}`;
+
+            // إرسال صامت لخادم Python API (إن كان مشغلاً) لتسجيل الطلب وإشعار تيليجرام
+            try {
+                fetch(CONFIG.backendApiUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ service: currentService.title, opt1, opt2, price, note, channel })
+                });
+            } catch (e) {}
+
+            const encoded = encodeURIComponent(orderSummary);
+            const urls = {
+                whatsapp: `https://wa.me/${CONFIG.whatsapp}?text=${encoded}`,
+                telegram: `https://t.me/${CONFIG.telegram}?text=${encoded}`,
+                facebook: CONFIG.facebook,
+                instagram: CONFIG.instagram,
+                email: `mailto:${CONFIG.email}?subject=${encodeURIComponent('طلب خدمة: ' + currentService.title)}&body=${encoded}`
+            };
+            window.open(urls[channel], '_blank');
+        }
+
+        function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
+        renderServices();
+    </script>
+</body>
+</html>
