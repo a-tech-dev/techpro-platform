@@ -1,1 +1,880 @@
-<meta http-equiv="refresh" content="0; url=./frontend/index.html" />
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">TechPro | سوق الأنظمة والبرمجيات والخدمات الرقمية</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-main: #070A10;
+            --bg-card: rgba(16, 22, 35, 0.65);
+            --bg-card-hover: rgba(24, 33, 52, 0.85);
+            --bg-glass: rgba(10, 14, 23, 0.75);
+            --accent: #2563EB;
+            --accent-light: #3B82F6;
+            --emerald: #10B981;
+            --text-white: #F8FAFC;
+            --text-gray: #94A3B8;
+            --border-glass: rgba(255, 255, 255, 0.12);
+            --liquid-blur: blur(20px) saturate(180%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', 'Inter', sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-white); line-height: 1.55; overflow-x: hidden; }
+
+        .liquid-glass {
+            background: var(--bg-glass);
+            backdrop-filter: var(--liquid-blur);
+            -webkit-backdrop-filter: var(--liquid-blur);
+            border: 1px solid var(--border-glass);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+        }
+
+        /* 1. الشريط العلوي الرقيق */
+        .slim-navbar {
+            position: sticky; top: 0; z-index: 200;
+            padding: 0.45rem 1.4rem;
+            border-top: none; border-left: none; border-right: none;
+        }
+        .nav-inner {
+            max-width: 1380px; margin: 0 auto;
+            display: flex; align-items: center; justify-content: space-between; gap: 0.8rem;
+        }
+        .brand-and-lang { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+        .brand-logo {
+            display: flex; align-items: center; gap: 7px; font-size: 1.25rem;
+            font-weight: 900; color: #fff; cursor: pointer; letter-spacing: -0.5px;
+        }
+        .brand-logo i { color: var(--accent-light); font-size: 1.35rem; }
+        .brand-logo span { color: var(--accent-light); font-family: 'Inter', sans-serif; }
+
+        .lang-pill-box {
+            display: flex; align-items: center; gap: 5px;
+            background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.14);
+            padding: 0.2rem 0.6rem; border-radius: 50px;
+        }
+        .lang-pill-box i { color: #60A5FA; font-size: 0.78rem; }
+        .lang-select {
+            background: transparent; border: none; color: #fff;
+            font-size: 0.76rem; font-weight: 800; outline: none; cursor: pointer;
+        }
+        .lang-select option { background: #0D121C; color: #fff; }
+
+        .nav-links {
+            display: flex; align-items: center; gap: 0.25rem; overflow-x: auto;
+            scrollbar-width: none; padding: 2px 0;
+        }
+        .nav-links::-webkit-scrollbar { display: none; }
+        .nav-item {
+            background: transparent; border: 1px solid transparent; color: var(--text-gray);
+            padding: 0.3rem 0.75rem; border-radius: 50px; font-size: 0.8rem; font-weight: 700;
+            cursor: pointer; white-space: nowrap; transition: 0.2s;
+        }
+        .nav-item:hover, .nav-item.active {
+            color: #fff; background: rgba(37, 99, 235, 0.22);
+            border-color: rgba(96, 165, 250, 0.45);
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.2);
+        }
+
+        /* 2. شاشة الترحيب الطويلة والبحث */
+        .container { max-width: 1380px; margin: 0 auto; padding: 0 1.2rem; }
+        .hero-tall-banner {
+            background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.32), rgba(10, 14, 23, 0.94) 72%),
+                        url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1400&q=80') center/cover;
+            border-radius: 26px; padding: 3.6rem 1.8rem; margin: 1.3rem 0 2.6rem;
+            text-align: center; position: relative; overflow: hidden;
+        }
+        .hero-badge-top {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(59, 130, 246, 0.14); border: 1px solid rgba(96, 165, 250, 0.35);
+            color: #93C5FD; padding: 0.3rem 1rem; border-radius: 50px;
+            font-size: 0.78rem; font-weight: 800; margin-bottom: 1rem;
+        }
+        .hero-tall-banner h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 0.75rem; color: #fff; }
+        .hero-tall-banner h1 span {
+            background: linear-gradient(90deg, #60A5FA, #34D399);
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero-tall-banner p { color: #CBD5E1; max-width: 720px; margin: 0 auto 1.8rem; font-size: 1rem; }
+
+        .hero-search-wrapper { max-width: 660px; margin: 0 auto 1.3rem; position: relative; }
+        .hero-search-input {
+            width: 100%; background: rgba(7, 10, 16, 0.78);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff; padding: 0.95rem 3.2rem 0.95rem 1.4rem;
+            border-radius: 50px; font-size: 0.95rem; font-weight: 600; outline: none;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+            transition: 0.25s;
+        }
+        .hero-search-input:focus { border-color: #60A5FA; box-shadow: 0 0 25px rgba(59, 130, 246, 0.4); }
+        .hero-search-icon {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            right: 20px; color: #60A5FA; font-size: 1.1rem; pointer-events: none;
+        }
+        html[dir="ltr"] .hero-search-icon { right: auto; left: 20px; }
+        html[dir="ltr"] .hero-search-input { padding: 0.95rem 1.4rem 0.95rem 3.2rem; }
+
+        .top-searches { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .top-searches span { font-size: 0.8rem; font-weight: 800; color: #94A3B8; }
+        .hot-tag {
+            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+            color: #F1F5F9; font-size: 0.76rem; font-weight: 700; padding: 0.28rem 0.85rem;
+            border-radius: 50px; cursor: pointer; transition: 0.2s;
+        }
+        .hot-tag:hover { background: var(--accent); border-color: var(--accent-light); transform: translateY(-2px); }
+
+        /* 3. الأسطر والبطاقات */
+        .marketplace-row { margin-bottom: 2.6rem; position: relative; }
+        .row-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1rem; gap: 10px;
+        }
+        .row-title-box h2 { font-size: 1.25rem; font-weight: 800; color: #fff; }
+        .row-title-box p { font-size: 0.8rem; color: var(--text-gray); }
+        .view-all-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass);
+            color: #fff; padding: 0.4rem 1rem; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: 0.2s;
+        }
+        .view-all-btn:hover { border-color: var(--accent-light); background: rgba(37,99,235,0.2); }
+
+        .row-wrapper { position: relative; }
+        .cards-track {
+            display: flex; gap: 1.15rem; overflow-x: auto; scroll-behavior: smooth;
+            padding: 6px 2px 12px; scrollbar-width: none;
+        }
+        .cards-track::-webkit-scrollbar { display: none; }
+        .cards-grid-mode {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+            gap: 1.15rem;
+        }
+
+        .side-arrow {
+            position: absolute; top: 50%; transform: translateY(-50%); z-index: 15;
+            width: 46px; height: 46px; border-radius: 50%;
+            color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            font-size: 1.05rem; opacity: 0; transition: opacity 0.28s ease, transform 0.2s, background 0.2s;
+        }
+        .row-wrapper:hover .side-arrow { opacity: 0.88; }
+        .side-arrow:hover { opacity: 1 !important; background: var(--accent); transform: translateY(-50%) scale(1.08); }
+        .arrow-left { left: -12px; }
+        .arrow-right { right: -12px; }
+
+        .g2g-card {
+            min-width: 258px; max-width: 258px;
+            background: var(--bg-card);
+            backdrop-filter: var(--liquid-blur); -webkit-backdrop-filter: var(--liquid-blur);
+            border: 1px solid var(--border-glass);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.12);
+            border-radius: 20px; overflow: hidden; cursor: pointer; transition: 0.28s;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .cards-grid-mode .g2g-card { min-width: 100%; max-width: 100%; }
+        .g2g-card:hover {
+            transform: translateY(-6px); background: var(--bg-card-hover);
+            border-color: var(--brand-color, #3B82F6);
+            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55), 0 0 22px var(--brand-glow, rgba(59,130,246,0.25));
+        }
+
+        .card-visual-top {
+            height: 138px; padding: 1rem; position: relative;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: radial-gradient(circle at 50% 60%, var(--brand-glow, rgba(59,130,246,0.22)) 0%, transparent 72%);
+        }
+        .distro-icon-circle {
+            width: 72px; height: 72px; border-radius: 50%;
+            background: var(--brand-bg, linear-gradient(135deg, #2563EB, #1D4ED8));
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.05rem; color: #fff;
+            box-shadow: 0 8px 20px var(--brand-glow, rgba(37,99,235,0.45)), inset 0 2px 4px rgba(255,255,255,0.35);
+            transition: transform 0.28s ease;
+        }
+        .g2g-card:hover .distro-icon-circle { transform: scale(1.08); }
+
+        .watermark-code {
+            position: absolute; right: 12px; top: 12px; font-size: 0.72rem;
+            font-weight: 800; font-family: 'Inter', sans-serif;
+            background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.1);
+            padding: 2px 8px; border-radius: 6px; color: #CBD5E1;
+        }
+        .price-tag-top {
+            position: absolute; left: 12px; top: 12px; background: rgba(16, 185, 129, 0.16);
+            color: #34D399; padding: 2px 9px; border-radius: 6px; font-size: 0.75rem; font-weight: 800;
+            border: 1px solid rgba(52, 211, 153, 0.35);
+        }
+
+        .card-body {
+            padding: 0.9rem 1.05rem 1.1rem; display: flex; flex-direction: column;
+            flex: 1; justify-content: space-between; text-align: center;
+        }
+        .audience-badge-sub {
+            font-size: 0.72rem; color: #E2E8F0; background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3px 9px; border-radius: 50px; display: inline-block; margin-bottom: 0.55rem; font-weight: 700;
+        }
+        .card-body h3 { font-size: 1.02rem; font-weight: 800; margin-bottom: 0.35rem; color: #fff; }
+        .card-body p { font-size: 0.78rem; color: var(--text-gray); margin-bottom: 0.9rem; }
+        .book-btn {
+            width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+            color: #fff; padding: 0.5rem; border-radius: 12px; font-weight: 800;
+            font-size: 0.8rem; cursor: pointer; transition: 0.2s;
+        }
+        .g2g-card:hover .book-btn {
+            background: var(--brand-bg, var(--accent)); border-color: rgba(255,255,255,0.3);
+        }
+
+        /* 4. قسم تقييمات وتعليقات الزوار */
+        .live-reviews-section {
+            margin: 3.5rem 0 2rem; padding-top: 2rem; border-top: 1px solid var(--border-glass);
+        }
+        .reviews-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;
+        }
+        .empty-reviews-msg {
+            text-align: center; padding: 1.5rem; border-radius: 16px; color: var(--text-gray);
+            font-size: 0.88rem; grid-column: 1 / -1;
+        }
+        .review-box-card { padding: 1.2rem; border-radius: 18px; }
+        .add-review-form { padding: 1.5rem; border-radius: 22px; max-width: 580px; margin: 0 auto; }
+        .form-row { margin-bottom: 0.85rem; }
+        .form-row label { display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.3rem; color: #CBD5E1; }
+        .form-row textarea, .form-row select {
+            width: 100%; background: rgba(7, 10, 16, 0.8); border: 1px solid rgba(255,255,255,0.14);
+            color: #fff; padding: 0.6rem 0.9rem; border-radius: 12px; font-size: 0.84rem; outline: none;
+        }
+        .submit-review-btn {
+            background: var(--accent); color: #fff; border: none; width: 100%;
+            padding: 0.7rem; border-radius: 12px; font-weight: 800; cursor: pointer; font-size: 0.9rem;
+        }
+
+        /* 5. النافذة المنبثقة */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(14px);
+            display: none; align-items: center; justify-content: center; z-index: 1000; padding: 0.8rem;
+        }
+        .modal-box {
+            border-radius: 24px; max-width: 490px; width: 100%; padding: 1.4rem;
+            position: relative; max-height: 94vh; overflow-y: auto;
+        }
+        .close-modal {
+            position: absolute; top: 12px; left: 12px; width: 32px; height: 32px;
+            border-radius: 50%; background: rgba(255,255,255,0.1); color: #fff; border: none;
+            font-size: 1.2rem; cursor: pointer; z-index: 5;
+        }
+        html[dir="ltr"] .close-modal { left: auto; right: 12px; }
+        .modal-preview {
+            height: 130px; border-radius: 16px; padding: 1rem; margin-bottom: 0.9rem;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.18);
+        }
+        .opt-group { margin: 0.8rem 0; }
+        .opt-group label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.4rem; color: #CBD5E1; }
+        .opt-pills { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; }
+        .pill {
+            background: rgba(7, 10, 16, 0.75); border: 1px solid rgba(255,255,255,0.12);
+            color: var(--text-gray); padding: 0.52rem; border-radius: 10px;
+            font-size: 0.8rem; font-weight: 700; cursor: pointer; text-align: center; transition: 0.15s;
+        }
+        .pill.active {
+            background: rgba(37, 99, 235, 0.3); border-color: #60A5FA; color: #fff;
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.25);
+        }
+        .note-field {
+            width: 100%; background: rgba(7, 10, 16, 0.75); border: 1px solid rgba(255,255,255,0.14);
+            color: #fff; padding: 0.55rem 0.8rem; border-radius: 10px; font-size: 0.82rem; outline: none;
+        }
+        .price-summary-box {
+            background: rgba(16, 185, 129, 0.12); border: 1px solid var(--emerald);
+            border-radius: 12px; padding: 0.7rem 1rem; margin: 0.9rem 0;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .price-summary-box strong { font-size: 1.25rem; color: #34D399; }
+
+        .contact-3-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+        .c-btn {
+            padding: 0.7rem; border-radius: 12px; border: none; color: #fff;
+            font-weight: 800; font-size: 0.85rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 7px;
+        }
+        .c-wa { background: #16a34a; grid-column: span 2; font-size: 0.9rem; }
+        .c-tg { background: #0284c7; }
+        .c-ig { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
+
+        footer {
+            text-align: center; padding: 1.5rem; color: var(--text-gray);
+            font-size: 0.8rem; border-top: 1px solid var(--border-glass);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. الشريط العلوي الرقيق -->
+    <nav class="slim-navbar liquid-glass">
+        <div class="nav-inner">
+            <div class="brand-and-lang">
+                <div class="brand-logo" onclick="switchCategory('all', document.querySelector('.nav-item'))">
+                    <i class="fa-solid fa-cube"></i> Tech<span>Pro</span>
+                </div>
+                <div class="lang-pill-box">
+                    <i class="fa-solid fa-globe"></i>
+                    <select id="langSwitcher" class="lang-select" onchange="changeLanguage(this.value)">
+                        <option value="ar">AR العربية</option>
+                        <option value="fr">FR Français</option>
+                        <option value="en">EN English</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="nav-links" id="topNavLinks">
+                <button class="nav-item active" data-cat="all" onclick="switchCategory('all', this)">الكل</button>
+                <button class="nav-item" data-cat="windows" onclick="switchCategory('windows', this)">Windows</button>
+                <button class="nav-item" data-cat="linux" onclick="switchCategory('linux', this)">Linux</button>
+                <button class="nav-item" data-cat="adobe" onclick="switchCategory('adobe', this)">Adobe</button>
+                <button class="nav-item" data-cat="office" onclick="switchCategory('office', this)">Office & Uni</button>
+                <button class="nav-item" data-cat="ai" onclick="switchCategory('ai', this)">AI Pro</button>
+                <button class="nav-item" data-cat="games" onclick="switchCategory('games', this)">الألعاب</button>
+                <button class="nav-item" data-cat="opt" onclick="switchCategory('opt', this)">التسريع</button>
+                <button class="nav-item" data-cat="visa" onclick="switchCategory('visa', this)">الفيزا والدفع</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- 2. شاشة الترحيب والبحث -->
+        <section class="hero-tall-banner liquid-glass">
+            <div class="hero-badge-top">
+                <i class="fa-solid fa-bolt"></i>
+                <span id="uiHeroBadge">متجر الأنظمة والبرمجيات الاحترافية</span>
+            </div>
+            <h1 id="uiHeroTitle">سوق الأنظمة، التوزيعات <span>والخدمات الرقمية</span></h1>
+            <p id="uiHeroDesc">تصفح كافة توزيعات Linux ونسخ Windows وحزم Adobe و Office والبطاقات البنكية. اختر إصدارك المفضل وعاين السعر لحظياً.</p>
+
+            <div class="hero-search-wrapper">
+                <i class="fa-solid fa-magnifying-glass hero-search-icon"></i>
+                <input type="text" id="globalSearch" class="hero-search-input" placeholder="ابحث عن نظام (Windows, Arch)، برنامج (Photoshop, Office)، ألعاب، تسريع، أو بطاقة Bybit/RedotPay..." oninput="handleSearch(this.value)">
+            </div>
+
+            <div class="top-searches">
+                <span id="uiPopularLabel">🔥 الأكثر بحثاً:</span>
+                <button class="hot-tag" onclick="triggerQuickSearch('LTSC')">Windows 10 LTSC</button>
+                <button class="hot-tag" onclick="triggerQuickSearch('Arch')">Arch Linux</button>
+                <button class="hot-tag" onclick="triggerQuickSearch('Photoshop')">Photoshop</button>
+                <button class="hot-tag" onclick="triggerQuickSearch('Bybit')">Bybit / RedotPay</button>
+                <button class="hot-tag" id="uiQuickGames" onclick="switchCategory('games')">الألعاب والمحاكيات</button>
+                <button class="hot-tag" id="uiQuickOpt" onclick="switchCategory('opt')">تسريع الحاسوب</button>
+            </div>
+        </section>
+
+        <!-- 3. حاوية الأسطر الـ 5 المدمجة -->
+        <main id="marketplaceContainer"></main>
+
+        <!-- 4. قسم تقييمات وتعليقات الزوار -->
+        <section class="live-reviews-section">
+            <h2 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 1rem;" id="uiReviewsHeading">⭐ تقييمات وتعليقات الزوار</h2>
+            <div class="reviews-grid" id="reviewsContainer"></div>
+
+            <div class="add-review-form liquid-glass">
+                <h3 style="font-size: 1.05rem; font-weight: 800; margin-bottom: 0.85rem;" id="uiAddRevTitle">اترك تقييمك وتعليقك مباشرة</h3>
+                <div class="form-row">
+                    <label id="uiRatingLabel">التقييم:</label>
+                    <select id="visitorRating">
+                        <option value="★★★★★">★★★★★ (5/5)</option>
+                        <option value="★★★★☆">★★★★☆ (4/5)</option>
+                        <option value="★★★☆☆">★★★☆☆ (3/5)</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label id="uiCommentLabel">تعليقك:</label>
+                    <textarea id="visitorComment" rows="3" placeholder="..."></textarea>
+                </div>
+                <button class="submit-review-btn" onclick="submitVisitorReview()" id="uiSubmitRevBtn">نشر التقييم</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- 5. النافذة المنبثقة للتخصيص -->
+    <div class="modal-overlay" id="configModal" onclick="if(event.target.id==='configModal') closeModal()">
+        <div class="modal-box liquid-glass">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+
+            <div class="modal-preview" id="mPreview">
+                <span class="watermark-code" id="mCode"></span>
+                <div class="distro-icon-circle" id="mCircle" style="width: 58px; height: 58px; font-size: 1.65rem; margin-bottom:6px;">
+                    <i id="mIcon"></i>
+                </div>
+                <span id="mEditionBadge" style="font-size: 0.75rem; font-weight:800; color:#E2E8F0;"></span>
+            </div>
+
+            <h3 id="mTitle" style="font-size: 1.15rem; font-weight:800;"></h3>
+            <p id="mDesc" style="font-size: 0.82rem; color: var(--text-gray); margin-bottom:0.6rem;"></p>
+
+            <div class="opt-group">
+                <label id="mQ1Label"></label>
+                <div class="opt-pills" id="mQ1Pills"></div>
+            </div>
+
+            <div class="opt-group">
+                <label id="mQ2Label"></label>
+                <div class="opt-pills" id="mQ2Pills"></div>
+            </div>
+
+            <div class="opt-group">
+                <label id="uiNoteLabel">ملاحظة إضافية (اختياري):</label>
+                <input type="text" id="mNote" class="note-field">
+            </div>
+
+            <div class="price-summary-box">
+                <span style="font-size: 0.85rem; font-weight:700;" id="uiTotalPriceLabel">💰 السعر الإجمالي:</span>
+                <strong id="mFinalPrice">0</strong>
+            </div>
+
+            <div class="contact-3-btns">
+                <button class="c-btn c-wa" onclick="sendOrder('whatsapp')">
+                    <i class="fa-brands fa-whatsapp fa-lg"></i> <span id="uiWaBtn">إرسال الطلب عبر واتساب</span>
+                </button>
+                <button class="c-btn c-tg" onclick="sendOrder('telegram')">
+                    <i class="fa-brands fa-telegram"></i> <span id="uiTgBtn">تيليجرام</span>
+                </button>
+                <button class="c-btn c-ig" onclick="sendOrder('instagram')">
+                    <i class="fa-brands fa-instagram"></i> <span id="uiIgBtn">إنستغرام</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer id="uiFooterText">
+        جميع الحقوق محفوظة &copy; 2026 TechPro Marketplace
+    </footer>
+
+    <script src="catalog_data.js"></script>
+    <script>
+        let activeItem = null;
+        let sel1 = 0;
+        let sel2 = 0;
+        let currentLang = 'ar';
+        let currentCategory = 'all';
+
+        const BRAND_COLORS = {
+            win11_official: { bg: "linear-gradient(135deg, #0078D4, #004E8C)", color: "#0078D4", glow: "rgba(0, 120, 212, 0.45)" },
+            win11_lite:     { bg: "linear-gradient(135deg, #3B82F6, #1D4ED8)", color: "#3B82F6", glow: "rgba(59, 130, 246, 0.45)" },
+            win10_official: { bg: "linear-gradient(135deg, #0284C7, #0369A1)", color: "#0284C7", glow: "rgba(2, 132, 199, 0.45)" },
+            win10_ltsc:     { bg: "linear-gradient(135deg, #0EA5E9, #0284C7)", color: "#0EA5E9", glow: "rgba(14, 165, 233, 0.45)" },
+            win8_win7:      { bg: "linear-gradient(135deg, #2563EB, #1E3A8A)", color: "#2563EB", glow: "rgba(37, 99, 235, 0.4)" },
+            ubuntu_distro:  { bg: "linear-gradient(135deg, #E95420, #77216F)", color: "#E95420", glow: "rgba(233, 84, 32, 0.5)" },
+            linux_mint:     { bg: "linear-gradient(135deg, #87CF3E, #4D881E)", color: "#87CF3E", glow: "rgba(135, 207, 62, 0.45)" },
+            kali_linux:     { bg: "linear-gradient(135deg, #2563EB, #0F172A)", color: "#3B82F6", glow: "rgba(37, 99, 235, 0.5)" },
+            parrot_sec:     { bg: "linear-gradient(135deg, #06B6D4, #0E7490)", color: "#06B6D4", glow: "rgba(6, 182, 212, 0.45)" },
+            arch_manjaro:   { bg: "linear-gradient(135deg, #1793D1, #35BF5C)", color: "#1793D1", glow: "rgba(23, 147, 209, 0.45)" },
+            debian_fedora:  { bg: "linear-gradient(135deg, #D70A53, #294172)", color: "#D70A53", glow: "rgba(215, 10, 83, 0.45)" },
+            pop_zorin:      { bg: "linear-gradient(135deg, #48B9C7, #FAA41A)", color: "#48B9C7", glow: "rgba(72, 185, 199, 0.45)" },
+            blackarch_tails:{ bg: "linear-gradient(135deg, #DC2626, #7F1D1D)", color: "#EF4444", glow: "rgba(239, 68, 68, 0.45)" },
+            light_linux:    { bg: "linear-gradient(135deg, #10B981, #047857)", color: "#10B981", glow: "rgba(16, 185, 129, 0.45)" },
+            adobe_ps:       { bg: "linear-gradient(135deg, #31A8FF, #001E36)", color: "#31A8FF", glow: "rgba(49, 168, 255, 0.5)" },
+            adobe_pr:       { bg: "linear-gradient(135deg, #9999FF, #2A0055)", color: "#9999FF", glow: "rgba(153, 153, 255, 0.5)" },
+            adobe_ae:       { bg: "linear-gradient(135deg, #A855F7, #3B0764)", color: "#A855F7", glow: "rgba(168, 85, 247, 0.5)" },
+            adobe_ai:       { bg: "linear-gradient(135deg, #FF9A00, #431407)", color: "#FF9A00", glow: "rgba(255, 154, 0, 0.5)" },
+            adobe_id_acrobat:{bg: "linear-gradient(135deg, #FF3366, #881337)", color: "#FF3366", glow: "rgba(255, 51, 102, 0.45)" },
+            office_2024_365:{ bg: "linear-gradient(135deg, #EA580C, #9A3412)", color: "#F97316", glow: "rgba(249, 115, 22, 0.45)" },
+            office_2016_2013:{bg: "linear-gradient(135deg, #16A34A, #15803D)", color: "#22C55E", glow: "rgba(34, 197, 94, 0.5)" },
+            usthb_math_stat:{ bg: "linear-gradient(135deg, #F59E0B, #B45309)", color: "#F59E0B", glow: "rgba(245, 158, 11, 0.45)" },
+            ai_chatgpt:     { bg: "linear-gradient(135deg, #10A37F, #047857)", color: "#10A37F", glow: "rgba(16, 163, 127, 0.5)" },
+            ai_gemini:      { bg: "linear-gradient(135deg, #3B82F6, #9333EA)", color: "#60A5FA", glow: "rgba(96, 165, 250, 0.5)" },
+            ai_claude:      { bg: "linear-gradient(135deg, #D97757, #9A3412)", color: "#D97757", glow: "rgba(217, 119, 87, 0.5)" },
+            ai_github:      { bg: "linear-gradient(135deg, #334155, #0F172A)", color: "#94A3B8", glow: "rgba(148, 163, 184, 0.45)" },
+            ai_copilot:     { bg: "linear-gradient(135deg, #6366F1, #312E81)", color: "#818CF8", glow: "rgba(99, 102, 241, 0.5)" },
+            games_pc:       { bg: "linear-gradient(135deg, #EC4899, #9D174D)", color: "#EC4899", glow: "rgba(236, 72, 153, 0.45)" },
+            games_ppsspp:   { bg: "linear-gradient(135deg, #EAB308, #A16207)", color: "#EAB308", glow: "rgba(234, 179, 8, 0.45)" },
+            opt_fps_boost:  { bg: "linear-gradient(135deg, #EF4444, #DC2626)", color: "#EF4444", glow: "rgba(239, 68, 68, 0.5)" },
+            opt_drivers_bios:{bg: "linear-gradient(135deg, #8B5CF6, #5B21B6)", color: "#8B5CF6", glow: "rgba(139, 92, 246, 0.45)" },
+            visa_create:    { bg: "linear-gradient(135deg, #2563EB, #1E40AF)", color: "#3B82F6", glow: "rgba(59, 130, 246, 0.5)" },
+            visa_topup:     { bg: "linear-gradient(135deg, #10B981, #047857)", color: "#10B981", glow: "rgba(16, 185, 129, 0.5)" },
+            visa_direct_pay:{ bg: "linear-gradient(135deg, #8B5CF6, #4C1D95)", color: "#A855F7", glow: "rgba(168, 85, 247, 0.5)" }
+        };
+
+        const UI_TEXT = {
+            ar: {
+                dir: "rtl", currency: "د.ج",
+                pageTitle: "TechPro | سوق الأنظمة والبرمجيات والخدمات الرقمية",
+                nav: { all: "الكل", windows: "Windows", linux: "Linux", adobe: "Adobe", office: "Office & الجامعة", ai: "الذكاء الاصطناعي", games: "الألعاب", opt: "التسريع", visa: "الفيزا والدفع" },
+                heroBadge: "متجر الأنظمة والبرمجيات الاحترافية",
+                heroTitle: "سوق الأنظمة، التوزيعات <span>والخدمات الرقمية</span>",
+                heroDesc: "تصفح كافة توزيعات Linux ونسخ Windows وحزم Adobe و Office والبطاقات البنكية. اختر إصدارك المفضل وعاين السعر لحظياً.",
+                searchPh: "ابحث عن نظام (Windows, Arch)، برنامج (Photoshop, Office)، ألعاب، تسريع، أو بطاقة Bybit/RedotPay...",
+                popular: "🔥 الأكثر بحثاً:",
+                quickGames: "الألعاب والمحاكيات", quickOpt: "تسريع الحاسوب",
+                viewAll: "عرض الكل", backAll: "← العودة للصفحة الرئيسية", chooseBtn: "اختر النسخة والإصدار ←",
+                reviewsHeading: "⭐ تقييمات وتعليقات الزوار",
+                noReviewsYet: "لا توجد تقييمات مضافة بعد. كن أول من يشارك تجربته!",
+                addRevTitle: "اترك تقييمك وتعليقك مباشرة",
+                ratingLabel: "التقييم:", commentLabel: "تعليقك:", submitRevBtn: "نشر التقييم",
+                noteLabel: "ملاحظة إضافية (اختياري):", totalPriceLabel: "💰 السعر الإجمالي:",
+                waBtn: "إرسال الطلب عبر واتساب", tgBtn: "تيليجرام", igBtn: "إنستغرام",
+                footer: "جميع الحقوق محفوظة © 2026 TechPro Marketplace",
+                rows: {
+                    trending:    { t: "🔥 الأكثر طلباً", s: "الأنظمة والبرامج والبطاقات الأكثر اختياراً" },
+                    os_merged:   { t: "💻 أنظمة التشغيل والتوزيعات", s: "جميع إصدارات Windows وتوزيعات Linux القياسية والمتقدمة" },
+                    apps_merged: { t: "🎨 البرمجيات، التصميم والأوفيس", s: "حزم Microsoft Office، برامج Adobe، والبرمجيات الهندسية" },
+                    visa:        { t: "💳 البطاقات البنكية والدفع الإلكتروني", s: "بطاقات Bybit و RedotPay، شحن الرصيد، والشراء المباشر" },
+                    ai:          { t: "🤖 منصات الذكاء الاصطناعي", s: "ChatGPT, Gemini, Claude, GitHub & Copilot" },
+                    windows:     { t: "🪟 عائلة أنظمة Windows", s: "جميع نسخ ويندوز الرسمية والمخففة (500 د.ج)" },
+                    linux:       { t: "🐧 موسوعة توزيعات Linux", s: "التوزيعات القياسية (500 د.ج) والمتقدمة (1000 د.ج)" },
+                    adobe:       { t: "🎨 برامج Adobe", s: "تثبيت وتفعيل أي برنامج أدوبي بـ 300 د.ج" },
+                    office:      { t: "📁 حزم Office والبرامج الجامعية", s: "الأوفيس الحديث (1000 د.ج)، القديم (800 د.ج)، أو برنامج منفرد (300 د.ج)" },
+                    games:       { t: "🎮 الألعاب والمحاكيات", s: "تثبيت الألعاب والمحاكيات مع ضبط الإعدادات (600 د.ج)" },
+                    opt:         { t: "⚡ تسريع الحاسوب والـ BIOS", s: "تسريع الألعاب (300 د.ج) وخفة الحاسوب والـ BIOS (200 د.ج)" }
+                }
+            },
+            fr: {
+                dir: "ltr", currency: "DA",
+                pageTitle: "TechPro | Marché des Systèmes, Linux & Logiciels",
+                nav: { all: "Tout", windows: "Windows", linux: "Linux", adobe: "Adobe", office: "Office & Uni", ai: "IA Pro", games: "Jeux", opt: "Optimisation", visa: "Visa & Pay" },
+                heroBadge: "Marché Professionnel des Systèmes & Logiciels",
+                heroTitle: "Systèmes, Distributions <span>& Services Numériques</span>",
+                heroDesc: "Explorez toutes les distributions Linux, éditions Windows, suites Adobe/Office et cartes Visa avec calcul immédiat.",
+                searchPh: "Rechercher un OS (Windows, Arch), logiciel (Photoshop, Office), jeux, optimisation...",
+                popular: "🔥 Populaires :",
+                quickGames: "Jeux & Émulateurs", quickOpt: "Optimisation PC",
+                viewAll: "Voir tout", backAll: "← Retour à l'accueil", chooseBtn: "Choisir l'édition →",
+                reviewsHeading: "⭐ Avis et Commentaires",
+                noReviewsYet: "Aucun avis pour le moment. Soyez le premier à commenter !",
+                addRevTitle: "Laissez votre note et commentaire",
+                ratingLabel: "Note :", commentLabel: "Votre commentaire :", submitRevBtn: "Publier",
+                noteLabel: "Note supplémentaire (optionnel) :", totalPriceLabel: "💰 Prix Total :",
+                waBtn: "Commander via WhatsApp", tgBtn: "Telegram", igBtn: "Instagram",
+                footer: "Tous droits réservés © 2026 TechPro Marketplace",
+                rows: {
+                    trending:    { t: "🔥 Les Plus Demandés", s: "Les systèmes, logiciels et cartes les plus populaires" },
+                    os_merged:   { t: "💻 Systèmes d'Exploitation & Distros", s: "Toutes les versions Windows et distributions Linux (Standard & Avancées)" },
+                    apps_merged: { t: "🎨 Logiciels, Design & Bureautique", s: "Suites Microsoft Office, applications Adobe et outils d'ingénierie" },
+                    visa:        { t: "💳 Cartes Visa & Paiements en Ligne", s: "Cartes Bybit & RedotPay, rechargement et achat direct" },
+                    ai:          { t: "🤖 Plateformes d'Intelligence Artificielle", s: "ChatGPT, Gemini, Claude, GitHub & Copilot" },
+                    windows:     { t: "🪟 Famille Microsoft Windows", s: "Toutes les éditions à 500 DA (+200 DA sauvegarde)" },
+                    linux:       { t: "🐧 Distributions Linux", s: "Distros standards (500 DA) et avancées (1000 DA)" },
+                    adobe:       { t: "🎨 Suite Adobe", s: "Chaque logiciel Adobe activé à 300 DA" },
+                    office:      { t: "📁 Microsoft Office & Logiciels Uni", s: "Pack récent (1000 DA), ancien (800 DA), ou logiciel seul (300 DA)" },
+                    games:       { t: "🎮 Jeux PC & Émulateurs", s: "Installation et configuration complète à 600 DA" },
+                    opt:         { t: "⚡ Optimisation & BIOS", s: "Boost FPS (300 DA) et optimisation système/BIOS (200 DA)" }
+                }
+            },
+            en: {
+                dir: "ltr", currency: "DZD",
+                pageTitle: "TechPro | OS, Linux Distros & Software Marketplace",
+                nav: { all: "All", windows: "Windows", linux: "Linux", adobe: "Adobe", office: "Office & Uni", ai: "AI Pro", games: "Games", opt: "Speedup", visa: "Visa & Pay" },
+                heroBadge: "Professional OS & Software Marketplace",
+                heroTitle: "Systems, Distros <span>& Digital Services</span>",
+                heroDesc: "Browse all Linux distros, Windows editions, Adobe/Office suites, and Visa cards with instant pricing.",
+                searchPh: "Search OS (Windows, Arch), apps (Photoshop, Office), games, speedup, Bybit/RedotPay...",
+                popular: "🔥 Trending:",
+                quickGames: "Games & Emulators", quickOpt: "PC Speedup",
+                viewAll: "View All", backAll: "← Back to Home", chooseBtn: "Select Edition →",
+                reviewsHeading: "⭐ Visitor Reviews",
+                noReviewsYet: "No reviews yet. Be the first to share your experience!",
+                addRevTitle: "Leave your rating and feedback",
+                ratingLabel: "Rating:", commentLabel: "Your Comment:", submitRevBtn: "Post Review",
+                noteLabel: "Additional Note (optional):", totalPriceLabel: "💰 Total Price:",
+                waBtn: "Order via WhatsApp", tgBtn: "Telegram", igBtn: "Instagram",
+                footer: "All rights reserved © 2026 TechPro Marketplace",
+                rows: {
+                    trending:    { t: "🔥 Most Popular", s: "Top requested operating systems, apps, and cards" },
+                    os_merged:   { t: "💻 Operating Systems & Distros", s: "All Windows editions and Linux distributions in one place" },
+                    apps_merged: { t: "🎨 Software, Design & Office Suites", s: "Microsoft Office, Adobe Creative Cloud, and University apps" },
+                    visa:        { t: "💳 Visa Cards & Online Payments", s: "Bybit & RedotPay cards, balance top-up, and direct checkout" },
+                    ai:          { t: "🤖 AI Pro Platforms", s: "ChatGPT, Gemini, Claude, GitHub & Copilot" },
+                    windows:     { t: "🪟 Microsoft Windows", s: "All editions for 500 DZD (+200 DZD data backup)" },
+                    linux:       { t: "🐧 Linux Distributions", s: "Standard distros (500 DZD) & Advanced setups (1000 DZD)" },
+                    adobe:       { t: "🎨 Adobe Creative Apps", s: "300 DZD per individual Adobe application" },
+                    office:      { t: "📁 Office & University Software", s: "Modern suite (1000 DZD), Legacy (800 DZD), or Single app (300 DZD)" },
+                    games:       { t: "🎮 PC Games & Emulators", s: "Full game/emulator installation and tuning for 600 DZD" },
+                    opt:         { t: "⚡ PC Speedup & BIOS", s: "Gaming FPS boost (300 DZD) & System/BIOS tuning (200 DZD)" }
+                }
+            }
+        };
+
+        // دالة استخراج النص حسب اللغة الحالية
+        function tObj(val) {
+            if (val && typeof val === 'object') return val[currentLang] || val.ar || '';
+            return val || '';
+        }
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const dict = UI_TEXT[lang];
+            document.getElementById('htmlRoot').setAttribute('dir', dict.dir);
+            document.getElementById('htmlRoot').setAttribute('lang', lang);
+            document.getElementById('pageTitle').innerText = dict.pageTitle;
+
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                const cat = btn.getAttribute('data-cat');
+                if (dict.nav[cat]) btn.innerText = dict.nav[cat];
+            });
+
+            document.getElementById('uiHeroBadge').innerText = dict.heroBadge;
+            document.getElementById('uiHeroTitle').innerHTML = dict.heroTitle;
+            document.getElementById('uiHeroDesc').innerText = dict.heroDesc;
+            document.getElementById('globalSearch').setAttribute('placeholder', dict.searchPh);
+            document.getElementById('uiPopularLabel').innerText = dict.popular;
+            document.getElementById('uiQuickGames').innerText = dict.quickGames;
+            document.getElementById('uiQuickOpt').innerText = dict.quickOpt;
+            document.getElementById('uiReviewsHeading').innerText = dict.reviewsHeading;
+            document.getElementById('uiAddRevTitle').innerText = dict.addRevTitle;
+            document.getElementById('uiRatingLabel').innerText = dict.ratingLabel;
+            document.getElementById('uiCommentLabel').innerText = dict.commentLabel;
+            document.getElementById('uiSubmitRevBtn').innerText = dict.submitRevBtn;
+            document.getElementById('uiNoteLabel').innerText = dict.noteLabel;
+            document.getElementById('uiTotalPriceLabel').innerText = dict.totalPriceLabel;
+            document.getElementById('uiWaBtn').innerText = dict.waBtn;
+            document.getElementById('uiTgBtn').innerText = dict.tgBtn;
+            document.getElementById('uiIgBtn').innerText = dict.igBtn;
+            document.getElementById('uiFooterText').innerText = dict.footer;
+
+            switchCategory(currentCategory);
+            renderSavedReviews();
+        }
+
+        function buildCardHTML(item) {
+            const brand = BRAND_COLORS[item.id] || { bg: "linear-gradient(135deg, #2563EB, #1D4ED8)", color: "#3B82F6", glow: "rgba(59,130,246,0.4)" };
+            const dict = UI_TEXT[currentLang];
+
+            return `
+                <div class="g2g-card" style="--brand-bg: ${brand.bg}; --brand-color: ${brand.color}; --brand-glow: ${brand.glow};" onclick="openItemModal('${item.id}')">
+                    <div>
+                        <div class="card-visual-top">
+                            <span class="watermark-code">${item.code}</span>
+                            <span class="price-tag-top">${tObj(item.startPrice)}</span>
+                            <div class="distro-icon-circle">
+                                <i class="${item.icon}"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <span class="audience-badge-sub">${tObj(item.targetAudience)}</span>
+                                <h3>${tObj(item.title)}</h3>
+                                <p>${tObj(item.desc)}</p>
+                            </div>
+                            <button class="book-btn">${dict.chooseBtn}</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAllRows() {
+            const container = document.getElementById('marketplaceContainer');
+            container.innerHTML = '';
+            const dict = UI_TEXT[currentLang];
+
+            ROWS_CONFIG.forEach(row => {
+                const items = row.id === 'trending'
+                    ? CATALOG_DATA.filter(i => i.trending)
+                    : CATALOG_DATA.filter(i => i.homeRow === row.id);
+
+                if (!items.length) return;
+                const rowText = dict.rows[row.id];
+
+                const rowEl = document.createElement('section');
+                rowEl.className = 'marketplace-row';
+                rowEl.innerHTML = `
+                    <div class="row-header">
+                        <div class="row-title-box">
+                            <h2>${rowText.t}</h2>
+                            <p>${rowText.s}</p>
+                        </div>
+                        ${row.id !== 'trending' ? `<button class="view-all-btn" onclick="switchCategory('${row.id}')">${dict.viewAll} (${items.length})</button>` : ''}
+                    </div>
+                    <div class="row-wrapper">
+                        <button class="side-arrow arrow-left liquid-glass" onclick="scrollRow('track-${row.id}', -320)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <div class="cards-track" id="track-${row.id}">
+                            ${items.map(buildCardHTML).join('')}
+                        </div>
+                        <button class="side-arrow arrow-right liquid-glass" onclick="scrollRow('track-${row.id}', 320)"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                `;
+                container.appendChild(rowEl);
+            });
+        }
+
+        function scrollRow(trackId, distance) {
+            const track = document.getElementById(trackId);
+            if (track) track.scrollBy({ left: distance, behavior: 'smooth' });
+        }
+
+        function switchCategory(catId, btnEl = null) {
+            currentCategory = catId;
+            document.getElementById('globalSearch').value = '';
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+            const match = btnEl || document.querySelector(`.nav-item[data-cat="${catId}"]`);
+            if (match) match.classList.add('active');
+
+            if (catId === 'all') {
+                renderAllRows();
+                return;
+            }
+
+            const dict = UI_TEXT[currentLang];
+            const rowText = dict.rows[catId] || { t: catId, s: '' };
+            const items = CATALOG_DATA.filter(i => i.category === catId || i.homeRow === catId);
+            const container = document.getElementById('marketplaceContainer');
+            container.innerHTML = `
+                <section class="marketplace-row">
+                    <div class="row-header">
+                        <div class="row-title-box">
+                            <h2>${rowText.t} (${items.length})</h2>
+                            <p>${rowText.s}</p>
+                        </div>
+                        <button class="view-all-btn" onclick="switchCategory('all')">${dict.backAll}</button>
+                    </div>
+                    <div class="cards-track cards-grid-mode">
+                        ${items.map(buildCardHTML).join('')}
+                    </div>
+                </section>
+            `;
+        }
+
+        function handleSearch(query) {
+            const q = query.trim().toLowerCase();
+            if (!q) { switchCategory(currentCategory); return; }
+
+            const filtered = CATALOG_DATA.filter(item =>
+                item.title.ar.toLowerCase().includes(q) ||
+                item.title.fr.toLowerCase().includes(q) ||
+                item.title.en.toLowerCase().includes(q) ||
+                item.desc.ar.toLowerCase().includes(q) ||
+                item.desc.fr.toLowerCase().includes(q) ||
+                item.desc.en.toLowerCase().includes(q) ||
+                item.code.toLowerCase().includes(q) ||
+                item.category.toLowerCase().includes(q)
+            );
+
+            const container = document.getElementById('marketplaceContainer');
+            container.innerHTML = `
+                <section class="marketplace-row">
+                    <div class="row-header">
+                        <div class="row-title-box">
+                            <h2>🔍 "${query}" (${filtered.length})</h2>
+                        </div>
+                        <button class="view-all-btn" onclick="triggerQuickSearch('')">✕</button>
+                    </div>
+                    <div class="cards-track cards-grid-mode">
+                        ${filtered.map(buildCardHTML).join('')}
+                    </div>
+                </section>
+            `;
+        }
+
+        function triggerQuickSearch(term) {
+            document.getElementById('globalSearch').value = term;
+            handleSearch(term);
+        }
+
+        function renderSavedReviews() {
+            const box = document.getElementById('reviewsContainer');
+            const saved = JSON.parse(localStorage.getItem('techpro_visitor_reviews_v2') || '[]');
+            if (!saved.length) {
+                box.innerHTML = `<div class="empty-reviews-msg liquid-glass">${UI_TEXT[currentLang].noReviewsYet}</div>`;
+                return;
+            }
+            box.innerHTML = saved.map(r => `
+                <div class="review-box-card liquid-glass">
+                    <div style="color: #FBBF24; font-size: 0.92rem; margin-bottom: 6px;">${r.rating}</div>
+                    <p style="font-size: 0.86rem; color: #F1F5F9;">"${r.comment}"</p>
+                </div>
+            `).join('');
+        }
+
+        function submitVisitorReview() {
+            const rating = document.getElementById('visitorRating').value;
+            const comment = document.getElementById('visitorComment').value.trim();
+            if (!comment) return;
+
+            const saved = JSON.parse(localStorage.getItem('techpro_visitor_reviews_v2') || '[]');
+            saved.unshift({ rating, comment });
+            localStorage.setItem('techpro_visitor_reviews_v2', JSON.stringify(saved));
+
+            document.getElementById('visitorComment').value = '';
+            renderSavedReviews();
+        }
+
+        function openItemModal(id) {
+            activeItem = CATALOG_DATA.find(i => i.id === id);
+            sel1 = 0; sel2 = 0;
+            document.getElementById('mNote').value = '';
+
+            const brand = BRAND_COLORS[activeItem.id] || { bg: "linear-gradient(135deg, #2563EB, #1D4ED8)", glow: "rgba(59,130,246,0.4)" };
+
+            document.getElementById('mPreview').style.background = `radial-gradient(circle, ${brand.glow} 0%, rgba(10,14,23,0.95) 80%)`;
+            document.getElementById('mCircle').style.background = brand.bg;
+            document.getElementById('mCode').innerText = activeItem.code;
+            document.getElementById('mIcon').className = activeItem.icon;
+            document.getElementById('mEditionBadge').innerText = tObj(activeItem.targetAudience);
+            document.getElementById('mTitle').innerText = tObj(activeItem.title);
+            document.getElementById('mDesc').innerText = tObj(activeItem.desc);
+            document.getElementById('mQ1Label').innerText = tObj(activeItem.q1.label);
+            document.getElementById('mQ2Label').innerText = tObj(activeItem.q2.label);
+
+            renderModalPills();
+            calcModalPrice();
+            document.getElementById('configModal').style.display = 'flex';
+        }
+
+        function renderModalPills() {
+            document.getElementById('mQ1Pills').innerHTML = activeItem.q1.options.map((o, i) =>
+                `<div class="pill ${i === sel1 ? 'active' : ''}" onclick="pickOpt(1, ${i})">${tObj(o.text)}</div>`
+            ).join('');
+            document.getElementById('mQ2Pills').innerHTML = activeItem.q2.options.map((o, i) =>
+                `<div class="pill ${i === sel2 ? 'active' : ''}" onclick="pickOpt(2, ${i})">${tObj(o.text)}</div>`
+            ).join('');
+        }
+
+        function pickOpt(group, idx) {
+            if (group === 1) sel1 = idx; else sel2 = idx;
+            renderModalPills();
+            calcModalPrice();
+        }
+
+        function calcModalPrice() {
+            const o1 = activeItem.q1.options[sel1];
+            const o2 = activeItem.q2.options[sel2];
+            const out = document.getElementById('mFinalPrice');
+            const cur = UI_TEXT[currentLang].currency;
+
+            if (o2.setPrice !== undefined) out.innerText = `${o2.setPrice} ${cur}`;
+            else if (typeof o1.price === 'number') out.innerText = `${o1.price + (o2.addPrice || 0)} ${cur}`;
+            else out.innerText = tObj(o1.price);
+        }
+
+        function sendOrder(channel) {
+            const o1 = tObj(activeItem.q1.options[sel1].text);
+            const o2 = tObj(activeItem.q2.options[sel2].text);
+            const price = document.getElementById('mFinalPrice').innerText;
+            const note = document.getElementById('mNote').value.trim() || "—";
+
+            const text = `TechPro Order:\n` +
+                `📦 Service: ${tObj(activeItem.title)}\n` +
+                `💿 Option 1: ${o1}\n` +
+                `⚙️ Option 2: ${o2}\n` +
+                `💰 Price: ${price}\n` +
+                `📝 Note: ${note}`;
+
+            const enc = encodeURIComponent(text);
+            const links = {
+                whatsapp: `https://wa.me/${CONFIG.whatsapp}?text=${enc}`,
+                telegram: `https://t.me/${CONFIG.telegram}?text=${enc}`,
+                instagram: CONFIG.instagram
+            };
+            window.open(links[channel], '_blank');
+        }
+
+        function closeModal() { document.getElementById('configModal').style.display = 'none'; }
+
+        renderAllRows();
+        renderSavedReviews();
+    </script>
+</body>
+</html>
