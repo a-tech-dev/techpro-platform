@@ -3,9 +3,9 @@
 // ============================================================================
 
 const CONFIG = {
-    whatsapp: "213549065398", // ضع رقمك هنا بدون +
+    whatsapp: "213549065398", // رقمك هنا بدون +
     telegram: "ProTechDZ_bot", // معرف تيليجرام بدون @
-    instagram: "https://www.instagram.com/ahmed03mohamed/", // رابط حسابك على إنستغرام
+    instagram: "ahmed03mohamed", // اكتب الـ Username فقط هنا، لا تكتب الرابط كاملاً
     backendApiUrl: "http://localhost:8000/api/orders"
 };
 
