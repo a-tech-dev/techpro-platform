@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
@@ -849,7 +849,7 @@
             else out.innerText = tObj(o1.price);
         }
 
-        function sendOrder(channel) {
+                function sendOrder(channel) {
             const o1 = tObj(activeItem.q1.options[sel1].text);
             const o2 = tObj(activeItem.q2.options[sel2].text);
             const price = document.getElementById('mFinalPrice').innerText;
@@ -863,12 +863,25 @@
                 `📝 Note: ${note}`;
 
             const enc = encodeURIComponent(text);
-            const links = {
-                whatsapp: `https://wa.me/${CONFIG.whatsapp}?text=${enc}`,
-                telegram: `https://t.me/${CONFIG.telegram}?text=${enc}`,
-                instagram: CONFIG.instagram
-            };
-            window.open(links[channel], '_blank');
+
+            if (channel === 'whatsapp') {
+                window.open(`https://wa.me/${CONFIG.whatsapp}?text=${enc}`, '_blank');
+            } else if (channel === 'telegram') {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('تم نسخ تفاصيل الطلب 📋! سيتم فتح البوت الآن، يرجى لصق الطلب هناك.');
+                    window.open(`https://t.me/${CONFIG.telegram}`, '_blank');
+                }).catch(() => {
+                    window.open(`https://t.me/${CONFIG.telegram}`, '_blank');
+                });
+            } else if (channel === 'instagram') {
+                const igUser = CONFIG.instagram.replace(/https?:\/\/(www\.)?instagram\.com\//g, '').replace(/\//g, '');
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('تم نسخ تفاصيل الطلب 📋! سيتم فتح حساب إنستغرام، اضغط على Message والصق الطلب.');
+                    window.open(`https://www.instagram.com/${igUser}/`, '_blank');
+                }).catch(() => {
+                    window.open(`https://www.instagram.com/${igUser}/`, '_blank');
+                });
+            }
         }
 
         function closeModal() { document.getElementById('configModal').style.display = 'none'; }

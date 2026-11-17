@@ -1,11 +1,11 @@
-// ============================================================================
+﻿// ============================================================================
 // TechPro Marketplace v3.0 - Fully Trilingual Database (AR / FR / EN)
 // ============================================================================
 
 const CONFIG = {
-    whatsapp: "213549065398", // رقمك هنا بدون +
-    telegram: "ProTechDZ_bot", // معرف تيليجرام بدون @
-    instagram: "ahmed03mohamed", // اكتب الـ Username فقط هنا، لا تكتب الرابط كاملاً
+    whatsapp: "213549065398",
+    telegram: "ProTechDZ_bot",
+    instagram: "ahmed03mohamed",
     backendApiUrl: "http://localhost:8000/api/orders"
 };
 
