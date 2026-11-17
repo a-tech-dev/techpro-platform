@@ -3,9 +3,9 @@
 // ============================================================================
 
 const CONFIG = {
-    whatsapp: "213XXXXXXXXX", // ضع رقمك هنا بدون +
-    telegram: "YourTelegramUsername", // معرف تيليجرام بدون @
-    instagram: "https://instagram.com/YourProfile", // رابط حسابك على إنستغرام
+    whatsapp: "213549065398", // رقمك هنا بدون +
+    telegram: "ProTechDZ_bot", // معرف تيليجرام بدون @
+    instagram: "ahmed03mohamed", // اكتب الـ Username فقط هنا، لا تكتب الرابط كاملاً
     backendApiUrl: "http://localhost:8000/api/orders"
 };
 

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" id="htmlRoot">
 <head>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">TechPro | سوق الأنظمة والبرمجيات والخدمات الرقمية</title>
@@ -598,6 +597,7 @@
             }
         };
 
+        // دالة استخراج النص حسب اللغة الحالية
         function tObj(val) {
             if (val && typeof val === 'object') return val[currentLang] || val.ar || '';
             return val || '';
@@ -863,24 +863,12 @@
                 `📝 Note: ${note}`;
 
             const enc = encodeURIComponent(text);
-
-            if (channel === 'whatsapp') {
-                window.open(`https://wa.me/${CONFIG.whatsapp}?text=${enc}`, '_blank');
-            } else if (channel === 'telegram') {
-                navigator.clipboard.writeText(text).then(() => {
-                    alert('تم نسخ تفاصيل الطلب 📋! سيتم فتح البوت الآن، يرجى لصق الطلب هناك لبدء المحادثة.');
-                    window.open(`https://t.me/${CONFIG.telegram}`, '_blank');
-                }).catch(() => {
-                    window.open(`https://t.me/${CONFIG.telegram}`, '_blank');
-                });
-            } else if (channel === 'instagram') {
-                navigator.clipboard.writeText(text).then(() => {
-                    alert('تم نسخ تفاصيل الطلب 📋! سيتم توجيهك لرسائل إنستغرام، يرجى لصق الطلب لإرساله.');
-                    window.open(`https://ig.me/m/${CONFIG.instagram}`, '_blank');
-                }).catch(() => {
-                    window.open(`https://ig.me/m/${CONFIG.instagram}`, '_blank');
-                });
-            }
+            const links = {
+                whatsapp: `https://wa.me/${CONFIG.whatsapp}?text=${enc}`,
+                telegram: `https://t.me/${CONFIG.telegram}?text=${enc}`,
+                instagram: CONFIG.instagram
+            };
+            window.open(links[channel], '_blank');
         }
 
         function closeModal() { document.getElementById('configModal').style.display = 'none'; }
